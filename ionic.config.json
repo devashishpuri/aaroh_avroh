@@ -1,0 +1,7 @@
+{
+  "name": "aaroh_avroh",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
