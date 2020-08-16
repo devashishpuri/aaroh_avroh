@@ -1,0 +1,24 @@
+.phrase-title {
+    color: var(--ion-color-primary);
+    font-size: large;
+    font-weight: bold;
+}
+
+// .phrase-body {
+//     white-space: pre-line;
+//     line-height: 1.6;
+
+//     .phrase-line {
+//         margin: 8px 0;
+//     }
+// }
+
+.phrase-swara {
+    &:not(:first-child) {
+        margin-left: 16px;
+    }
+}
+
+ion-item:last-child .phrase-delimeter {
+    display: none;
+}

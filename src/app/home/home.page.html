@@ -1,0 +1,114 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button routerLink='/settings' routerDirection="forward">
+        <ion-icon slot="icon-only" name="settings-sharp" routerLink='/settings'></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <!-- <ion-list-header>
+      <ion-label>
+        Settings
+      </ion-label>
+    </ion-list-header> -->
+
+    <!-- Root Swara -->
+    <ion-item>
+      <ion-label>Choose Root Swara</ion-label>
+      <ion-select interface="popover" placeholder="Root Swara" [(ngModel)]='selectedRootSwara'>
+        <ion-select-option *ngFor='let swara of rootSwaras' [value]='swara'>
+          {{ swara }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Last Swara -->
+    <ion-item>
+      <ion-label>Choose Last Swara</ion-label>
+      <ion-select interface="popover" placeholder="Root Swara" [(ngModel)]='selectedLastSwara'>
+        <ion-select-option *ngFor='let swara of lastSwaras' [value]='swara'>
+          {{ swara }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <div *ngIf="showAllSwaras; then allSwaras else selectiveSwaras"></div>
+
+    <ng-template #allSwaras>
+      <!-- Mandra Saptak -->
+      <div class="ion-padding-horizontal">
+        <h6>Choose Swaras from Mandra Saptak</h6>
+        <div class="ion-padding-vertical">
+          <ion-chip *ngFor='let swara of mandraSaptak;' (click)='addSwara(swara)'>
+            <ion-label>{{ swara }}</ion-label>
+          </ion-chip>
+        </div>
+      </div>
+
+      <!-- Mandra Saptak -->
+      <div class="ion-padding-horizontal">
+        <h6>Choose Swaras from Madhya Saptak</h6>
+        <div class="ion-padding-vertical">
+          <ion-chip *ngFor='let swara of madhaSaptak;' (click)='addSwara(swara)'>
+            <ion-label>{{ swara }}</ion-label>
+          </ion-chip>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #selectiveSwaras>
+      <!-- Flute Swaras -->
+      <div class="ion-padding-horizontal">
+        <h6>Choose swaras to build first phrase</h6>
+        <div class="ion-padding-vertical">
+          <ion-chip *ngFor='let swara of fluteSwaras;' (click)='addSwara(swara)'>
+            <ion-label>{{ swara }}</ion-label>
+          </ion-chip>
+        </div>
+      </div>
+    </ng-template>
+
+    <ion-item>
+      <ion-textarea placeholder="Result..." [value]='resultPhrase' readonly></ion-textarea>
+    </ion-item>
+
+
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" edge slot="fixed">
+    <!-- <ion-fab-button class="preview-fab">
+      <ion-icon name="checkmark"></ion-icon>
+      Preview
+    </ion-fab-button> -->
+    <ion-button class="fab-button" (click)='preview()'>
+      <ion-icon slot="start" name="checkmark"></ion-icon>
+      Preview
+    </ion-button>
+  </ion-fab>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot='start'>
+      <ion-button (click)='clearResult()'>
+        Clear
+      </ion-button>
+    </ion-buttons>
+
+    <!-- <ion-buttons slot='end'>
+      <ion-button color="primary" (click)='preview()'>
+        Preview
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-footer>

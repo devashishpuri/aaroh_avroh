@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+
+    <!-- Swara Selection -->
+    <ion-radio-group>
+      <ion-list-header>
+        <ion-label>Choose Swara Selection</ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>Partial Madra Saptak, Madhya Saptak</ion-label>
+        <ion-radio slot="start" value="partial"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Full Madra Saptak, Madhya Saptak</ion-label>
+        <ion-radio slot="start" value="full"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+
+    <!-- Dark theme  -->
+    <ion-item lines="full">
+      <ion-icon slot="start" name="moon"></ion-icon>
+      <ion-label>
+        Toggle Dark Theme
+      </ion-label>
+      <ion-toggle [(ngModel)]="isDarkMode" slot="end" (ionChange)="toggle($event)"></ion-toggle>
+    </ion-item>
+  </ion-list>
+</ion-content>

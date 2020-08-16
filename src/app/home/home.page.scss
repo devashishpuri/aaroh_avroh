@@ -1,0 +1,10 @@
+ion-fab {
+    width: 120px;
+    right: 32px;
+    bottom: -16px;
+
+    ion-button::part(native) {
+        border-radius: 32px;
+        padding: 24px;
+    }
+}
