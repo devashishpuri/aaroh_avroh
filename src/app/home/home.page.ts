@@ -17,6 +17,7 @@ export class HomePage implements OnInit {
   // Settings
   selectedRootSwara: string = this.rootSwaras[0];
   selectedLastSwara: string = this.lastSwaras[0];
+  highlightTextArea = false;
   // Swaras for Selection
   mandraSaptak: string[];
   madhaSaptak: string[];
@@ -36,6 +37,11 @@ export class HomePage implements OnInit {
 
   addSwara(swara: string) {
     this.result.push(swara);
+    // Highlight Result
+    this.highlightTextArea = true;
+    setTimeout(() => {
+      this.highlightTextArea = false;
+    }, 700);
   }
 
   get resultPhrase() {
@@ -44,9 +50,11 @@ export class HomePage implements OnInit {
 
   clearResult() {
     this.result = [];
+    this.selectedRootSwara = this.rootSwaras[0];
+    this.selectedLastSwara = this.lastSwaras[0];
   }
 
-  preview() {
+  async preview() {
     if (this.result.length) {
       let navigationExtras: NavigationExtras = {
         state: {
@@ -57,7 +65,8 @@ export class HomePage implements OnInit {
           } as AlankarPhrase
         }
       };
-      this.router.navigate(['preview'], navigationExtras);
+      await this.router.navigate(['preview'], navigationExtras);
+      this.clearResult();
     }
   }
 

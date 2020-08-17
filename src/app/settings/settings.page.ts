@@ -13,12 +13,14 @@ export class SettingsPage implements OnInit {
   prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
   constructor() {
-    this.prefersDark.addListener((e) => {
-      this.isDarkMode = e.matches;
-    });
+    this.prefersDark.addEventListener('change', this.getDeviceDarkMode.bind(this));
   }
 
   ngOnInit() {
+    this.getDeviceDarkMode();
+  }
+
+  private getDeviceDarkMode() {
     this.isDarkMode = this.prefersDark.matches;
   }
 

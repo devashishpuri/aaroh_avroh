@@ -79,7 +79,8 @@
     </ng-template>
 
     <ion-item>
-      <ion-textarea placeholder="Result..." [value]='resultPhrase' readonly></ion-textarea>
+      <ion-textarea [color]='highlightTextArea ? "primary" : "" ' placeholder="Result..." [value]='resultPhrase'
+        readonly></ion-textarea>
     </ion-item>
 
 
