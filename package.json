@@ -1,15 +1,16 @@
 {
   "name": "aaroh_avroh",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Devashish Puri",
+  "homepage": "",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "gh-pages": "ng build --base-href 'https://devashishpuri.github.io/aaroh_avroh/' --prod && npx ngh --dir=www/"
   },
   "private": true,
   "dependencies": {
@@ -41,6 +42,7 @@
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
+    "angular-cli-ghpages": "^0.6.2",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -54,5 +56,5 @@
     "tslint": "~6.1.0",
     "typescript": "~3.8.3"
   },
-  "description": "An Ionic project"
+  "description": "An application to help you advance in your musical journey. Create & Journal practice phrases to improve your skills at light-speed."
 }
