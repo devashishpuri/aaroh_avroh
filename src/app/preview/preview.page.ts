@@ -23,10 +23,10 @@ export class PreviewPage implements OnInit {
     this.route.queryParams.subscribe(_ => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.alankar = this.router.getCurrentNavigation().extras.state.alankarPhrase;
-
         this.title = this.alankar.phrase.join(", ");
-
         this.preparePhrases();
+      } else {
+        this.router.navigate(['/home']);
       }
     });
   }
