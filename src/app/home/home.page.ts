@@ -41,7 +41,7 @@ export class HomePage implements OnInit {
     this.highlightTextArea = true;
     setTimeout(() => {
       this.highlightTextArea = false;
-    }, 700);
+    }, 300);
   }
 
   get resultPhrase() {

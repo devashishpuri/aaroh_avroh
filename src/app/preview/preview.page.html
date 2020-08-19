@@ -63,4 +63,32 @@
     </div>
   </div> -->
 
+  <ion-fab vertical="bottom" horizontal="end" edge slot="fixed">
+    <!-- <ion-fab-button class="preview-fab">
+      <ion-icon name="checkmark"></ion-icon>
+      Preview
+    </ion-fab-button> -->
+    <ion-button class="fab-button">
+      <ion-icon slot="start" name="checkmark"></ion-icon>
+      Save
+    </ion-button>
+  </ion-fab>
+
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot='start'>
+      <ion-button>
+        <ion-icon slot="start" name="share-social"></ion-icon>
+        Share
+      </ion-button>
+    </ion-buttons>
+
+    <!-- <ion-buttons slot='end'>
+      <ion-button color="primary" (click)='preview()'>
+        Preview
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-footer>

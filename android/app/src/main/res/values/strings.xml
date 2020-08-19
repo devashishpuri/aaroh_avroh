@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Aaroh Avroh</string>
+    <string name="title_activity_main">Aaroh Avroh</string>
+    <string name="package_name">com.deviation.aaroh_avroh</string>
+    <string name="custom_url_scheme">com.deviation.aaroh_avroh</string>
+</resources>

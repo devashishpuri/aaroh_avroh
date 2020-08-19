@@ -13,19 +13,23 @@ export class SettingsPage implements OnInit {
   prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
   constructor() {
+    this.getDeviceDarkMode();
     this.prefersDark.addEventListener('change', this.getDeviceDarkMode.bind(this));
   }
 
-  ngOnInit() {
-    this.getDeviceDarkMode();
-  }
+  ngOnInit() { }
 
   private getDeviceDarkMode() {
-    this.isDarkMode = this.prefersDark.matches;
+    this.isDarkMode = this.prefersDark.matches || document.body.classList.contains('dark');
   }
 
-  toggle(event: IonToggle) {
-    document.body.classList.toggle('dark', event.checked);
+  toggle(event) {
+    // document.body.classList.toggle('dark', event.checked);
+    if (event.detail.checked) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
   }
 
 }

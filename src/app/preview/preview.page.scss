@@ -22,3 +22,18 @@
 ion-item:last-child .phrase-delimeter {
     display: none;
 }
+
+ion-content::part(scroll) {
+    margin-bottom: 32px;
+}
+
+ion-fab {
+    width: 120px;
+    right: 8px;
+    bottom: -16px;
+
+    ion-button::part(native) {
+        border-radius: 32px;
+        padding: 24px;
+    }
+}
