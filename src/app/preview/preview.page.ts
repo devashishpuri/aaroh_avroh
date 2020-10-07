@@ -79,39 +79,48 @@ export class PreviewPage implements OnInit {
   async save() {
     const phrase = this.alankar.phrase.join(', ');
     const name = await this.getTitle();
-    await this.storageService.saveAlankar({
-      ...this.alankar,
-      title: name || phrase,
-      date: new Date().getTime()
-    });
-    this.nav.navigateRoot('/saved');
+    if (name || name === "") {
+      await this.storageService.saveAlankar({
+        ...this.alankar,
+        title: name || phrase,
+        date: new Date().getTime()
+      });
+      this.nav.navigateRoot('/saved');
+    }
   }
 
   private async getTitle() {
-    const alert = await this.alertController.create({
-      cssClass: 'alankar-title',
-      header: 'Alankar Name',
-      inputs: [
-        {
-          name: 'title',
-          type: 'text',
-          placeholder: 'Name your Alankar'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => { }
-        },
-        {
-          text: 'Save',
-          handler: () => { }
-        }
-      ]
+    return new Promise<string>(async (resolve, reject) => {
+      const alert = await this.alertController.create({
+        cssClass: 'alankar-title',
+        header: 'Alankar Name',
+        inputs: [
+          {
+            name: 'title',
+            type: 'text',
+            placeholder: 'Name your Alankar'
+          }
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              resolve(null);
+            }
+          },
+          {
+            text: 'Save',
+            handler: data => {
+              alert.dismiss();
+              resolve(data.title || "");
+            }
+          }
+        ]
+      });
+      await alert.present();
+      // return (await alert.onDidDismiss()).data.values.title;
     });
-    await alert.present();
-    return (await alert.onDidDismiss()).data.values.title;
   }
 
   // getText(phrases: Array<Array<string>>) {
