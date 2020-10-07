@@ -5,6 +5,7 @@ import { Plugins } from '@capacitor/core';
 import { AlankarPhrase, SavedAlankar } from '../app.interfaces';
 import { AlankarService, StorageService } from '../_shared';
 import { AlertController, NavController } from '@ionic/angular';
+import { ROOT_SWARAS, LAST_SWARAS, Thaat } from '../app.structs';
 
 const { Share } = Plugins;
 
@@ -30,13 +31,20 @@ export class PreviewPage implements OnInit {
     private storageService: StorageService,
     private alertController: AlertController
   ) {
-    this.route.queryParams.subscribe(_ => {
+    this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         const alreadySaved = this.router.getCurrentNavigation().extras.state.saved;
         this.alreadySaved = alreadySaved || false;
         this.alankar = this.router.getCurrentNavigation().extras.state.alankarPhrase;
         this.title = alreadySaved ? this.alankar.title : this.alankar.phrase.join(", ");
         this.preparePhrases();
+      } else if (params.phrase) {
+        this.alankar = {
+          phrase: params.phrase,
+          rootSwara: params.rootSwara || ROOT_SWARAS[0],
+          lastSwara: params.lastSwara || LAST_SWARAS[0],
+          thaat: params.thaat || Thaat.Bilaval,
+        } as SavedAlankar;
       } else {
         this.router.navigate(['/home']);
       }
@@ -60,7 +68,7 @@ export class PreviewPage implements OnInit {
     Share.share({
       title: this.alreadySaved ? this.alankar.title : phrase,
       text: 'View this alankar on the Alankar app',
-      url: 'https://devashishpuri.github.io/aaroh_avroh/',
+      url: `https://devashishpuri.github.io/aaroh_avroh/preview/phrase=${this.alankar.phrase}&thaat=${this.alankar.thaat}&rootSwara=${this.alankar.rootSwara}&lastSwara=${this.alankar.lastSwara}`,
       dialogTitle: this.alreadySaved ? this.alankar.title : phrase
     });
   }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IonToggle } from '@ionic/angular';
 import { StorageService, StoragePreference } from '../_shared';
-import { Thaat, getThaatObj, ROOT_SWARAS, LAST_SWARAS, THAATS } from '../app.structs';
+import { Thaat, ROOT_SWARAS, LAST_SWARAS, THAATS } from '../app.structs';
 import { KeyValue } from '@angular/common';
 import { DefaultConfig } from '../app.interfaces';
 

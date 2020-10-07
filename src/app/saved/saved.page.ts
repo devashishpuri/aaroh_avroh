@@ -47,7 +47,7 @@ export class SavedPage implements OnInit {
     Share.share({
       title: alankar.title,
       text: 'View this alankar on the Alankar app',
-      url: 'https://devashishpuri.github.io/aaroh_avroh/',
+      url: `https://devashishpuri.github.io/aaroh_avroh/preview/phrase=${alankar.phrase}&thaat=${alankar.thaat}&rootSwara=${alankar.rootSwara}&lastSwara=${alankar.lastSwara}`,
       dialogTitle: alankar.title
     });
   }
