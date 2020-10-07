@@ -7,6 +7,9 @@ const routes: Routes = [
   {
     path: '',
     component: PreviewPage
+  }, {
+    path: '**',
+    redirectTo: ''
   }
 ];
 
@@ -14,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PreviewPageRoutingModule {}
+export class PreviewPageRoutingModule { }
