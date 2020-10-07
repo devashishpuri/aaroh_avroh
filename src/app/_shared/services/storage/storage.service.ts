@@ -6,7 +6,8 @@ import { Storage } from '@ionic/storage';
 import * as uuid from 'uuid';
 
 export enum StoragePreference {
-  DarkMode = 'darkMode'
+  DarkMode = 'darkMode',
+  DefaultConfig = 'defaultConfig',
 }
 
 @Injectable({

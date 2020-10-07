@@ -13,6 +13,10 @@ export enum Thaat {
     Todi
 }
 
+export const ROOT_SWARAS: string[] = ['S', 'P̣'];
+export const LAST_SWARAS: string[] = ['Ṡ', 'Ṗ'];
+export const THAATS = getThaatObj() as any;
+
 export const THAAT_SWARAS: ThaatSwara[] = [
     // Bilaval
     {

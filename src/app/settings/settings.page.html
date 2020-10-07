@@ -12,7 +12,7 @@
   <ion-list>
 
     <!-- Swara Selection -->
-    <ion-radio-group>
+    <!-- <ion-radio-group>
       <ion-list-header>
         <ion-label>Choose Swara Selection</ion-label>
       </ion-list-header>
@@ -26,7 +26,44 @@
         <ion-label>Full Madra Saptak, Madhya Saptak</ion-label>
         <ion-radio slot="start" value="full"></ion-radio>
       </ion-item>
-    </ion-radio-group>
+    </ion-radio-group> -->
+
+    <!-- Default configuration -->
+    <ion-list-header>
+      <ion-label>Choose Default Configuration</ion-label>
+    </ion-list-header>
+
+    <!-- Root Swara -->
+    <ion-item>
+      <ion-label>Choose Root Swara</ion-label>
+      <ion-select interface="popover" placeholder="Root Swara" (ionChange)='onConfChange()'
+        [(ngModel)]='defaultConf.rootSwara'>
+        <ion-select-option *ngFor='let swara of rootSwaras' [value]='swara'>
+          {{ swara }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Last Swara -->
+    <ion-item>
+      <ion-label>Choose Last Swara</ion-label>
+      <ion-select interface="popover" placeholder="Last Swara" (ionChange)='onConfChange()'
+        [(ngModel)]='defaultConf.lastSwara'>
+        <ion-select-option *ngFor='let swara of lastSwaras' [value]='swara'>
+          {{ swara }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Thaat -->
+    <ion-item>
+      <ion-label>Choose Thaat</ion-label>
+      <ion-select interface="popover" placeholder="Thaat" (ionChange)='onConfChange()' [(ngModel)]='defaultConf.thaat'>
+        <ion-select-option *ngFor='let thaat of thaats | keyvalue: originalOrder' [value]='thaat.value'>
+          {{ thaat.key }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
 
     <!-- Dark theme  -->
     <ion-item lines="full">

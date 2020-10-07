@@ -24,3 +24,9 @@ export interface SavedAlankar extends AlankarPhrase {
     date: number;
 }
 
+export interface DefaultConfig {
+    rootSwara: string;
+    lastSwara: string;
+    thaat: Thaat
+}
+

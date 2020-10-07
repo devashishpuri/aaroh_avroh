@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AlankarService } from '../_shared';
+import { AlankarService, StorageService, StoragePreference } from '../_shared';
 import { NavigationExtras, Router } from '@angular/router';
-import { AlankarPhrase } from '../app.interfaces';
-import { THAAT_SWARAS, Thaat, getThaatObj } from '../app.structs';
+import { AlankarPhrase, DefaultConfig } from '../app.interfaces';
+import { THAAT_SWARAS, Thaat, ROOT_SWARAS, LAST_SWARAS, THAATS } from '../app.structs';
 import { KeyValue } from '@angular/common';
 
 @Component({
@@ -12,9 +12,9 @@ import { KeyValue } from '@angular/common';
 })
 export class HomePage implements OnInit {
 
-  rootSwaras: string[] = ['S', 'P̣'];
-  lastSwaras: string[] = ['Ṡ', 'Ṗ'];
-  thaats = getThaatObj() as any;
+  rootSwaras = ROOT_SWARAS;
+  lastSwaras = LAST_SWARAS;
+  thaats = THAATS;
 
   // ####| Template helpers |####
   // Settings
@@ -35,14 +35,25 @@ export class HomePage implements OnInit {
   // Result
   private result: string[] = [];
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private storage: StorageService) {
     // this.mandraSaptak = this.alankarService.mandraSaptak;
     // this.madhaSaptak = this.alankarService.madhyaSaptak;
     // this.fluteSwaras = this.alankarService.fluteSwaras;
     this.fluteSwaras = THAAT_SWARAS[this.selectedThaat].swaraSelection;
+
+    this.getDefaultConf();
   }
 
   ngOnInit() {
+  }
+
+  private async getDefaultConf() {
+    const conf: DefaultConfig = await this.storage.getPreference(StoragePreference.DefaultConfig);
+    if (conf) {
+      this.selectedRootSwara = conf.rootSwara;
+      this.selectedLastSwara = conf.lastSwara;
+      this.selectedThaat = conf.thaat;
+    }
   }
 
   onThaatChange(event) {
