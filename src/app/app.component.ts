@@ -7,6 +7,8 @@ import {
   Plugins,
   StatusBarStyle,
 } from '@capacitor/core';
+import { Router, NavigationEnd, NavigationCancel } from '@angular/router';
+import { StorageService, StoragePreference } from './_shared';
 const { StatusBar, SplashScreen } = Plugins;
 
 @Component({
@@ -44,6 +46,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private platform: Platform,
+    private router: Router,
+    private storage: StorageService
     // private splashScreen: SplashScreen,
     // private statusBar: StatusBar
   ) {
@@ -51,13 +55,29 @@ export class AppComponent implements OnInit {
     this.getDeviceDarkMode();
     this.prefersDark.addEventListener('change', this.getDeviceDarkMode.bind(this));
 
+    this.router.events
+      .subscribe((event) => {
+        if (event instanceof NavigationEnd || NavigationCancel) {
+          this.checkRouteSelection();
+        }
+      })
+  }
+
+  private checkRouteSelection() {
+    this.selectedIndex = -1;
+    this.appPages.forEach((page, index) => {
+      if (window.location.pathname.indexOf(page.url) !== -1) {
+        this.selectedIndex = index;
+        return;
+      }
+    });
   }
 
   initializeApp() {
     this.platform.ready().then(async () => {
       try {
-        await StatusBar.setStyle({ style: StatusBarStyle.Dark });
-        await StatusBar.setBackgroundColor({ color: '#EA4E95' });
+        // await StatusBar.setStyle({ style: StatusBarStyle.Dark });
+        // await StatusBar.setBackgroundColor({ color: '#EA4E95' });
       } catch (_) {
         console.warn(_);
       }
@@ -72,8 +92,32 @@ export class AppComponent implements OnInit {
 
   ngOnInit() { }
 
-  private getDeviceDarkMode() {
+  private setStatusBarTheme(isDarkTheme = false) {
+    this.platform.ready().then(async () => {
+      try {
+        if (isDarkTheme) {
+          await StatusBar.setStyle({ style: StatusBarStyle.Dark });
+          // await StatusBar.setBackgroundColor({ color: '#EA4E95' });
+        } else {
+          await StatusBar.setStyle({ style: StatusBarStyle.Light });
+        }
+      } catch (_) {
+        console.warn(_);
+      }
+    });
+  }
+
+  private async getDeviceDarkMode() {
     // document.body.classList.toggle('dark', this.prefersDark.matches);
+    const darkModePref = await this.storage.getPreference(StoragePreference.DarkMode);
+    if (darkModePref != undefined || darkModePref != null) {
+      if (darkModePref) {
+        document.body.classList.add('dark');
+      } else {
+        document.body.classList.remove('dark');
+      }
+      return;
+    }
     if (this.prefersDark.matches) {
       document.body.classList.add('dark');
     } else {

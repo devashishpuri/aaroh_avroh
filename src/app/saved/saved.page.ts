@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { SavedAlankar } from '../app.interfaces';
+import { StorageService } from '../_shared';
+import { Plugins } from '@capacitor/core';
+
+const { Share } = Plugins;
 
 @Component({
   selector: 'app-saved',
@@ -9,57 +13,47 @@ import { SavedAlankar } from '../app.interfaces';
 })
 export class SavedPage implements OnInit {
 
-  alankars: SavedAlankar[] = [
-    {
-      id: 1,
-      title: 'Jump Alankar',
-      phrase: ['Sa', 'Ga', 'Re', 'Ma'],
-      date: 1597489448000,
-      rootSwara: 'Sa',
-      lastSwara: 'Sa\''
-    },
-    {
-      id: 2,
-      title: 'Jump Alankar',
-      phrase: ['Sa', 'Ga', 'Re', 'Ma'],
-      date: 1597489448000,
-      rootSwara: 'Sa',
-      lastSwara: 'Sa\''
-    },
-    {
-      id: 3,
-      title: 'Jump Alankar',
-      phrase: ['Sa', 'Ga', 'Re', 'Ma'],
-      date: 1597489448000,
-      rootSwara: 'Sa',
-      lastSwara: 'Sa\''
-    },
-    {
-      id: 4,
-      title: 'Jump Alankar',
-      phrase: ['Sa', 'Ga', 'Re', 'Ma'],
-      date: 1597489448000,
-      rootSwara: 'Sa',
-      lastSwara: 'Sa\''
-    },
-  ]
+  alankars: SavedAlankar[] = []
 
-  constructor(private router: Router) { }
-
-  ngOnInit() {
+  constructor(private router: Router, private storage: StorageService) {
+    this.fetchAlankars();
   }
 
-  preview(alankar: SavedAlankar) {
-    this.router.navigate(['/preview']);
+  ngOnInit() { }
+
+  private async fetchAlankars() {
+    this.alankars = await this.storage.getSavedAlankars();
   }
 
-  remove(event: Event, alankar: SavedAlankar) {
+  async preview(alankar: SavedAlankar) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        alankarPhrase: alankar,
+        saved: true
+      }
+    };
+    await this.router.navigate(['preview'], navigationExtras);
+  }
+
+  async remove(event: Event, alankar: SavedAlankar) {
     event.stopPropagation();
-    console.log('Removing Alankar');
+    await this.storage.deleteAlankar(alankar.id);
+    const index = this.alankars.indexOf(alankar);
+    this.alankars.splice(index, 1);
+  }
+
+  share(event: Event, alankar: SavedAlankar) {
+    event.stopPropagation();
+    Share.share({
+      title: alankar.title,
+      text: 'View this alankar on the Alankar app',
+      url: 'https://devashishpuri.github.io/aaroh_avroh/',
+      dialogTitle: alankar.title
+    });
   }
 
   getDescription(phrase: string[]) {
-    return  phrase.join(', ');
+    return phrase.join(', ');
   }
 
 }

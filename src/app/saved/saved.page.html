@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -8,20 +8,30 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list *ngFor='let alankar of alankars;'>
-    <ion-item button (click)='preview(alankar)'>
-      <ion-label>
-        <h2>{{ alankar.title }}</h2>
-        <h3>{{ getDescription(alankar.phrase) }}</h3>
-        <p>{{ alankar.date | date:'short' }}</p>
-      </ion-label>
+  <div *ngIf="alankars && alankars.length; then savedAlankars else noData"></div>
 
-      <ion-button slot="end" fill="clear" (click)="remove($event, alankar)">
-        <ion-icon slot="icon-only" ios="share-social" md="share-social"></ion-icon>
-      </ion-button>
-      <ion-button slot="end" fill="clear" (click)="remove($event, alankar)">
-        <ion-icon slot="icon-only" ios="trash" md="trash"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-list>
+  <ng-template #savedAlankars>
+    <ion-list *ngFor='let alankar of alankars;'>
+      <ion-item button (click)='preview(alankar)'>
+        <ion-label>
+          <h2>{{ alankar.title }}</h2>
+          <h3>{{ getDescription(alankar.phrase) }}</h3>
+          <p>{{ alankar.date | date:'short' }}</p>
+        </ion-label>
+
+        <ion-button slot="end" fill="clear" (click)="share($event, alankar)">
+          <ion-icon slot="icon-only" ios="share-social" md="share-social"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" fill="clear" (click)="remove($event, alankar)">
+          <ion-icon slot="icon-only" ios="trash" md="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </ng-template>
+
+  <ng-template #noData>
+    <div class="no-data">
+      No Data Found
+    </div>
+  </ng-template>
 </ion-content>

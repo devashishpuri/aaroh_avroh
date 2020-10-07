@@ -1,37 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Alankar } from 'src/app/app.interfaces';
+import { Thaat, SWARAS, THAAT_SWARAS } from 'src/app/app.structs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlankarService {
 
-  mandraSaptak = ['sa', 're', 'ga', 'ma', 'pa', 'dha', 'ni'];
-  madhyaSaptak = [
-    'Sa',
-    'Re',
-    'Ga',
-    'Ma',
-    'Pa',
-    'Dha',
-    'Ni',
-  ];
-  taarSaptak = ['Sa\'', 'Re\'', 'Ga\'', 'Ma\'', 'Pa\'', 'Dha\'', 'Ni\''];
+  // mandraSaptak = ['sa', 're', 'ga', 'ma', 'pa', 'dha', 'ni'];
+  // madhyaSaptak = [
+  //   'Sa',
+  //   'Re',
+  //   'Ga',
+  //   'Ma',
+  //   'Pa',
+  //   'Dha',
+  //   'Ni',
+  // ];
+  // taarSaptak = ['Sa\'', 'Re\'', 'Ga\'', 'Ma\'', 'Pa\'', 'Dha\'', 'Ni\''];
 
-  swaras = [...this.mandraSaptak, ...this.madhyaSaptak, ...this.taarSaptak];
-  fluteSwaras = ['pa', 'dha', 'ni', ...this.madhyaSaptak];
+  // swaras = [...this.mandraSaptak, ...this.madhyaSaptak, ...this.taarSaptak];
+  // fluteSwaras = ['pa', 'dha', 'ni', ...this.madhyaSaptak];
 
   constructor() { }
 
-  getAlankar(basePhrase: string[], rootSwara: string, lastSwara: string, customSwaras?: string[]) {
+  getAlankar(basePhrase: string[], rootSwara: string, lastSwara: string, thaat: Thaat, vargitSwaras: string[]) {
+    const swaras = THAAT_SWARAS[thaat].swaras;
     return {
-      aaroh: this.getAaroh(basePhrase, rootSwara, lastSwara),
-      avroh: this.getAvroh(basePhrase, rootSwara, lastSwara)
+      aaroh: this.getAaroh(basePhrase, rootSwara, lastSwara, swaras),
+      avroh: this.getAvroh(basePhrase, rootSwara, lastSwara, swaras)
     } as Alankar;
   }
 
   getAaroh(basePhrase: string[], root: string, range: string, customSwaras?: string[]) {
-    const swaras = customSwaras || this.swaras;
+    const swaras = customSwaras || SWARAS;
     let phrases: Array<Array<string>> = [];
     let lastSwara: string;
     for (let i = 0; lastSwara != range; i++) {
@@ -54,7 +56,7 @@ export class AlankarService {
   }
 
   getAvroh(basePhrase: string[], root: string, range: string, customSwaras?: string[]) {
-    const swaras = customSwaras || this.swaras;
+    const swaras = customSwaras || SWARAS;
     // Construct base phrase for avroh
     const swaraDifference: number[] = [];
     basePhrase.forEach((element) => {

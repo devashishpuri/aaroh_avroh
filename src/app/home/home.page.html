@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -42,10 +42,21 @@
       </ion-select>
     </ion-item>
 
-    <div *ngIf="showAllSwaras; then allSwaras else selectiveSwaras"></div>
+    <!-- Thaat -->
+    <ion-item>
+      <ion-label>Choose Thaat</ion-label>
+      <ion-select interface="popover" placeholder="Root Swara" (ionChange)='onThaatChange($event)'
+        [(ngModel)]='selectedThaat'>
+        <ion-select-option *ngFor='let thaat of thaats | keyvalue: originalOrder' [value]='thaat.value'>
+          {{ thaat.key }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
 
-    <ng-template #allSwaras>
-      <!-- Mandra Saptak -->
+    <!-- <div *ngIf="showAllSwaras; then allSwaras else selectiveSwaras"></div> -->
+
+    <!-- <ng-template #allSwaras>
+      <!-- Mandra Saptak -/->
       <div class="ion-padding-horizontal">
         <h6>Choose Swaras from Mandra Saptak</h6>
         <div class="ion-padding-vertical">
@@ -55,7 +66,7 @@
         </div>
       </div>
 
-      <!-- Mandra Saptak -->
+      <!-- Mandra Saptak -/->
       <div class="ion-padding-horizontal">
         <h6>Choose Swaras from Madhya Saptak</h6>
         <div class="ion-padding-vertical">
@@ -64,19 +75,20 @@
           </ion-chip>
         </div>
       </div>
-    </ng-template>
+    </ng-template> -->
 
-    <ng-template #selectiveSwaras>
-      <!-- Flute Swaras -->
-      <div class="ion-padding-horizontal">
-        <h6>Choose swaras to build first phrase</h6>
-        <div class="ion-padding-vertical">
-          <ion-chip *ngFor='let swara of fluteSwaras;' (click)='addSwara(swara)'>
-            <ion-label>{{ swara }}</ion-label>
-          </ion-chip>
-        </div>
+    <!-- <ng-template #selectiveSwaras> -->
+    <!-- Flute Swaras -->
+    <div class="ion-padding-horizontal">
+      <h6>Choose swaras to build first phrase</h6>
+      <div class="ion-padding-vertical">
+        <ion-chip *ngFor='let swara of fluteSwaras;' (click)='addSwara(swara)'
+          [outline]='isVargit(swara)'>
+          <ion-label>{{ swara }}</ion-label>
+        </ion-chip>
       </div>
-    </ng-template>
+    </div>
+    <!-- </ng-template> -->
 
     <ion-item>
       <ion-textarea [color]='highlightTextArea ? "primary" : "" ' placeholder="Result..." [value]='resultPhrase'
@@ -106,10 +118,5 @@
       </ion-button>
     </ion-buttons>
 
-    <!-- <ion-buttons slot='end'>
-      <ion-button color="primary" (click)='preview()'>
-        Preview
-      </ion-button>
-    </ion-buttons> -->
   </ion-toolbar>
 </ion-footer>
