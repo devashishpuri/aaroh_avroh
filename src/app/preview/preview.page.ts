@@ -68,17 +68,21 @@ export class PreviewPage implements OnInit {
 
   share() {
     const phrase = this.alankar.phrase.join(', ');
+    let shareUrl = `https://devashishpuri.github.io/aaroh_avroh/home/?phrase=${this.alankar.phrase}&thaat=${this.alankar.thaat}&rootSwara=${this.alankar.rootSwara}&lastSwara=${this.alankar.lastSwara}`;
+    if (this.alankar.title) {
+      shareUrl += `&title=${this.alankar.title}`;
+    }
     Share.share({
       title: this.alreadySaved ? this.alankar.title : phrase,
       text: 'View this alankar on the Alankar app',
-      url: encodeURI(`https://devashishpuri.github.io/aaroh_avroh/home?phrase=${this.alankar.phrase}&thaat=${this.alankar.thaat}&rootSwara=${this.alankar.rootSwara}&lastSwara=${this.alankar.lastSwara}`),
+      url: encodeURI(shareUrl),
       dialogTitle: this.alreadySaved ? this.alankar.title : phrase
     });
   }
 
   async save() {
     const phrase = this.alankar.phrase.join(', ');
-    const name = await this.getTitle();
+    const name = await this.getTitle(this.alankar.title);
     if (name || name === "") {
       await this.storageService.saveAlankar({
         ...this.alankar,
@@ -89,7 +93,7 @@ export class PreviewPage implements OnInit {
     }
   }
 
-  private async getTitle() {
+  private async getTitle(defaultVal?: string) {
     return new Promise<string>(async (resolve, reject) => {
       const alert = await this.alertController.create({
         cssClass: 'alankar-title',
@@ -98,7 +102,8 @@ export class PreviewPage implements OnInit {
           {
             name: 'title',
             type: 'text',
-            placeholder: 'Name your Alankar'
+            placeholder: 'Name your Alankar',
+            value: defaultVal
           }
         ],
         buttons: [
