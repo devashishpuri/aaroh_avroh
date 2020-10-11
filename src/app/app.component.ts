@@ -129,15 +129,19 @@ export class AppComponent implements OnInit {
         const toast = await this.toastController.create({
           animated: true,
           header: 'Download the app for better experience',
-          duration: 3000,
+          // duration: 3000,
           buttons: [
-
             {
               side: 'end',
               text: 'Download',
               handler: () => {
                 window.open('https://play.google.com/store/apps/details?id=com.deviation.twenty_one_days&hl=en_US', '_blank');
               }
+            },
+            {
+              side: 'end',
+              role: 'cancel',
+              icon: 'close'
             }
           ]
         });
