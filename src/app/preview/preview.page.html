@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" [scrollX]="true">
+<ion-content class="preview-page" [fullscreen]="true" [scrollX]="true">
 
   <ion-list>
     <ion-list-header>
@@ -17,10 +17,12 @@
     </ion-list-header>
 
     <ion-item *ngFor="let phrase  of aaroh;">
-      <span class="phrase-swara" *ngFor="let swara of phrase;">
-        {{ swara }}
-      </span>
-      <span class="phrase-delimeter">,</span>
+      <ion-label class="ion-text-wrap">
+        <span class="phrase-swara" *ngFor="let swara of phrase; let i = index;">
+          {{ swara + (i != phrase.length - 1 ? '    ' : '') }}
+        </span>
+        <strong class="phrase-delimeter">,</strong>
+      </ion-label>
     </ion-item>
   </ion-list>
 
@@ -32,10 +34,12 @@
     </ion-list-header>
 
     <ion-item *ngFor="let phrase  of avroh;">
-      <span class="phrase-swara" *ngFor="let swara of phrase;">
-        {{ swara }}
-      </span>
-      <span class="phrase-delimeter">,</span>
+      <ion-label class="ion-text-wrap">
+        <span class="phrase-swara" *ngFor="let swara of phrase; let i = index;">
+          {{ swara + (i != phrase.length - 1 ? '    ' : '') }}
+        </span>
+        <strong class="phrase-delimeter">,</strong>
+      </ion-label>
     </ion-item>
   </ion-list>
 

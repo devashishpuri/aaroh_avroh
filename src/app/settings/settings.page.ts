@@ -4,6 +4,12 @@ import { Thaat, ROOT_SWARAS, LAST_SWARAS, THAATS } from '../app.structs';
 import { KeyValue } from '@angular/common';
 import { DefaultConfig } from '../app.interfaces';
 
+import {
+  Plugins,
+  StatusBarStyle,
+} from '@capacitor/core';
+const { StatusBar } = Plugins;
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
@@ -57,9 +63,25 @@ export class SettingsPage implements OnInit {
     if (event.detail.checked) {
       document.body.classList.add('dark');
       this.storage.savePreference(StoragePreference.DarkMode, true);
+      this.setStatusBarTheme(true);
     } else {
       document.body.classList.remove('dark');
       this.storage.savePreference(StoragePreference.DarkMode, false);
+      this.setStatusBarTheme(false);
+    }
+  }
+
+  private async setStatusBarTheme(isDarkTheme = false) {
+    try {
+      if (isDarkTheme) {
+        await StatusBar.setStyle({ style: StatusBarStyle.Dark });
+        await StatusBar.setBackgroundColor({ color: '#202020' });
+      } else {
+        await StatusBar.setStyle({ style: StatusBarStyle.Light });
+        await StatusBar.setBackgroundColor({ color: '#ffffff' });
+      }
+    } catch (_) {
+      console.warn(_);
     }
   }
 
