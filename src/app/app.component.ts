@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
       try {
         const url = window.location.href.split('home').pop();
         if (url && url.indexOf('phrase') !== -1) {
-          const deeplink = `app://com.deviation.aaroh_avroh${url}`;
+          const deeplink = `app://com.deviation.aaroh_avroh/preview${url}`;
           window.location.href = deeplink;
         }
       } catch (_) {
@@ -109,10 +109,10 @@ export class AppComponent implements OnInit {
       this.zone.run(() => {
         // url: https://devashishpuri.github.io/aaroh_avroh/preview
         // slug = /preview?<xyz>
-        const slug = data.url.split("home").pop();
-        if (slug && slug.indexOf('phrase') !== -1) {
+        const slug = data.url.split("aaroh_avroh").pop();
+        if (slug && slug.indexOf('preview') !== -1) {
           setTimeout(() => {
-            this.router.navigateByUrl(`/preview${slug}`);
+            this.router.navigateByUrl(slug);
           }, 500);
         }
         // If no match, do nothing - let regular routing 

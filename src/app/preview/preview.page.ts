@@ -71,7 +71,7 @@ export class PreviewPage implements OnInit {
     Share.share({
       title: this.alreadySaved ? this.alankar.title : phrase,
       text: 'View this alankar on the Alankar app',
-      url: `https://devashishpuri.github.io/aaroh_avroh/?phrase=${this.alankar.phrase}&thaat=${this.alankar.thaat}&rootSwara=${this.alankar.rootSwara}&lastSwara=${this.alankar.lastSwara}`,
+      url: encodeURI(`https://devashishpuri.github.io/aaroh_avroh/home?phrase=${this.alankar.phrase}&thaat=${this.alankar.thaat}&rootSwara=${this.alankar.rootSwara}&lastSwara=${this.alankar.lastSwara}`),
       dialogTitle: this.alreadySaved ? this.alankar.title : phrase
     });
   }
