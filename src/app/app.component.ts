@@ -135,7 +135,7 @@ export class AppComponent implements OnInit {
               side: 'end',
               text: 'Download',
               handler: () => {
-                window.open('https://play.google.com/store/apps/details?id=com.deviation.twenty_one_days&hl=en_US', '_blank');
+                window.open('https://play.google.com/store/apps/details?id=com.deviation.aaroh_avroh&hl=en_US', '_blank');
               }
             },
             {
