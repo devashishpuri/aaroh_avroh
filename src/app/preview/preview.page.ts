@@ -68,7 +68,7 @@ export class PreviewPage implements OnInit {
 
   share() {
     const phrase = this.alankar.phrase.join(', ');
-    let shareUrl = `https://devashishpuri.github.io/aaroh_avroh/home/?phrase=${this.alankar.phrase}&thaat=${this.alankar.thaat}&rootSwara=${this.alankar.rootSwara}&lastSwara=${this.alankar.lastSwara}`;
+    let shareUrl = `https://devashishpuri.github.io/aaroh_avroh/home/?phrase=${this.alankar.phrase}&thaat=${this.alankar.thaat}&rootSwara=${this.alankar.rootSwara}&lastSwara=${this.alankar.lastSwara}&vargitSwaras=${this.alankar.vargitSwaras}`;
     if (this.alankar.title) {
       shareUrl += `&title=${this.alankar.title}`;
     }

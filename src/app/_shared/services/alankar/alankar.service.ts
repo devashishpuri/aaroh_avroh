@@ -25,7 +25,7 @@ export class AlankarService {
   constructor() { }
 
   getAlankar(basePhrase: string[], rootSwara: string, lastSwara: string, thaat: Thaat, vargitSwaras: string[]) {
-    const swaras = THAAT_SWARAS[thaat].swaras;
+    const swaras = this.vargayiSwaras(THAAT_SWARAS[thaat].swaras, vargitSwaras);
     return {
       aaroh: this.getAaroh(basePhrase, rootSwara, lastSwara, swaras),
       avroh: this.getAvroh(basePhrase, rootSwara, lastSwara, swaras)
@@ -90,6 +90,16 @@ export class AlankarService {
       phrases.push(phrase);
     }
     return phrases;
+  }
+
+  private vargayiSwaras(swaras: string[], vargitSwaras: string[]) {
+    const swarasSet = [];
+    swaras.forEach(swara => {
+      if (!vargitSwaras.includes(swara)) {
+        swarasSet.push(swara);
+      }
+    });
+    return swarasSet;
   }
 
 }

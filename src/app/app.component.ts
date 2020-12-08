@@ -55,7 +55,9 @@ export class AppComponent implements OnInit {
   ) {
 
     this.redirectToAppIfInstalled();
-    this.openPreviewIfParams();
+    if (!this.platform.is("hybrid")) {
+      this.openPreviewIfParams();
+    }
     this.initializeApp();
     this.getDeviceDarkMode();
     this.prefersDark.addEventListener('change', this.getDeviceDarkMode.bind(this));

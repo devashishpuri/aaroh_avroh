@@ -1,5 +1,5 @@
-import { NgModule, Injectable } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -12,6 +12,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { IonicGestureConfig } from './_helpers/hammer.conf';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +28,11 @@ import { IonicStorageModule } from '@ionic/storage';
     })
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: IonicGestureConfig
+    }
   ],
   bootstrap: [AppComponent]
 })
