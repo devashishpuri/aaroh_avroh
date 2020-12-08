@@ -81,8 +81,9 @@
     <!-- Flute Swaras -->
     <div class="ion-padding-horizontal">
       <h6>Choose swaras to build first phrase</h6>
+      <span>(Long press to make swara a vargit swara)</span>
       <div class="ion-padding-vertical">
-        <ion-chip *ngFor='let swara of fluteSwaras;' (click)='addSwara(swara)'
+        <ion-chip *ngFor='let swara of fluteSwaras;' (press)='onPress(swara)' (click)='addSwara(swara)'
           [outline]='isVargit(swara)'>
           <ion-label>{{ swara }}</ion-label>
         </ion-chip>
@@ -91,8 +92,9 @@
     <!-- </ng-template> -->
 
     <ion-item>
-      <ion-textarea [color]='highlightTextArea ? "primary" : "" ' placeholder="Result..." [value]='resultPhrase'
-        readonly></ion-textarea>
+      <ion-textarea #phrase enterkeyhint="done" inputmode="numeric" [color]='highlightTextArea ? "primary" : "" '
+        placeholder="Result..." (ionInput)='textChange($event)' [value]='resultPhrase'>
+      </ion-textarea>
     </ion-item>
 
 

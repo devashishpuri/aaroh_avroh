@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { AlankarService, StorageService, StoragePreference } from '../_shared';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { StorageService, StoragePreference } from '../_shared';
 import { NavigationExtras, Router } from '@angular/router';
 import { AlankarPhrase, DefaultConfig } from '../app.interfaces';
 import { THAAT_SWARAS, Thaat, ROOT_SWARAS, LAST_SWARAS, THAATS } from '../app.structs';
 import { KeyValue } from '@angular/common';
+import { IonTextarea } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,8 @@ import { KeyValue } from '@angular/common';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+
+  @ViewChild('phrase', {static: false}) phrase: IonTextarea;
 
   rootSwaras = ROOT_SWARAS;
   lastSwaras = LAST_SWARAS;
@@ -35,7 +38,12 @@ export class HomePage implements OnInit {
   // Result
   private result: string[] = [];
 
-  constructor(private router: Router, private storage: StorageService) {
+  resultPhrase: string;
+
+  constructor(
+    private router: Router,
+    private storage: StorageService
+  ) {
     // this.mandraSaptak = this.alankarService.mandraSaptak;
     // this.madhaSaptak = this.alankarService.madhyaSaptak;
     // this.fluteSwaras = this.alankarService.fluteSwaras;
@@ -61,7 +69,11 @@ export class HomePage implements OnInit {
   }
 
   addSwara(swara: string) {
+    if (this.isVargit(swara)) {
+      return;
+    }
     this.result.push(swara);
+    this.resultPhrase = this.result.join(', ');
     // Highlight Result
     this.highlightTextArea = true;
     setTimeout(() => {
@@ -73,6 +85,7 @@ export class HomePage implements OnInit {
     const index = this.vargitSwaras.indexOf(swara);
     if (index === -1) {
       this.vargitSwaras.push(swara);
+      this.result = this.result.filter(v => v != swara);
     } else {
       this.vargitSwaras.splice(index, 1);
     }
@@ -82,12 +95,13 @@ export class HomePage implements OnInit {
     return this.vargitSwaras.indexOf(swara) !== -1;
   }
 
-  get resultPhrase() {
-    return this.result.join(', ');
-  }
+  // get resultPhrase() {
+  //   return this.result.join(', ');
+  // }
 
   clearResult() {
     this.result = [];
+    this.resultPhrase = null;
     this.selectedRootSwara = this.rootSwaras[0];
     this.selectedLastSwara = this.lastSwaras[0];
   }
@@ -101,7 +115,7 @@ export class HomePage implements OnInit {
             lastSwara: this.selectedLastSwara,
             phrase: this.result,
             thaat: this.selectedThaat,
-            vargitSwaras: []
+            vargitSwaras: this.vargitSwaras
           } as AlankarPhrase
         }
       };
@@ -112,6 +126,16 @@ export class HomePage implements OnInit {
 
   originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
     return 0;
+  }
+
+  textChange(event) {
+    const key = event.detail.data;
+    let val: string = event.srcElement?.value;
+    val = val?.replace(/\d+/, '');
+    val = val.replace(key, '');
+    this.result = val?.split(', ').filter(v => v);
+    this.resultPhrase = this.result.join(', ');
+    this.phrase.value = this.resultPhrase;
   }
 
 }
