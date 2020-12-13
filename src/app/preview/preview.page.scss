@@ -24,7 +24,11 @@
     // &:not(:last-of-type) {
     //     margin-right: 16px;
     // }
-    white-space: pre;
+    white-space: pre-wrap;
+
+    &:first-of-type {
+        margin-left: -3px;
+    }
 }
 
 ion-item:last-child .phrase-delimeter {

@@ -19,12 +19,12 @@ import { IonicGestureConfig } from './_helpers/hammer.conf';
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({scrollAssist: true}),
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     IonicStorageModule.forRoot({
       name: '_alankars',
-      driverOrder: ['sqlite', 'indexeddb', 'websql']
+      driverOrder: ['sqlite', 'indexeddb', 'websql'],
     })
   ],
   providers: [

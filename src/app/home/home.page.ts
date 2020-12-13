@@ -4,7 +4,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { AlankarPhrase, DefaultConfig } from '../app.interfaces';
 import { THAAT_SWARAS, Thaat, ROOT_SWARAS, LAST_SWARAS, THAATS } from '../app.structs';
 import { KeyValue } from '@angular/common';
-import { IonTextarea } from '@ionic/angular';
+import { IonContent, IonTextarea, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,8 @@ import { IonTextarea } from '@ionic/angular';
 })
 export class HomePage implements OnInit {
 
-  @ViewChild('phrase', {static: false}) phrase: IonTextarea;
+  @ViewChild('phrase', { static: false }) phrase: IonTextarea;
+  @ViewChild('content') content: IonContent;
 
   rootSwaras = ROOT_SWARAS;
   lastSwaras = LAST_SWARAS;
@@ -42,7 +43,8 @@ export class HomePage implements OnInit {
 
   constructor(
     private router: Router,
-    private storage: StorageService
+    private storage: StorageService,
+    private platform: Platform
   ) {
     // this.mandraSaptak = this.alankarService.mandraSaptak;
     // this.madhaSaptak = this.alankarService.madhyaSaptak;
@@ -83,6 +85,9 @@ export class HomePage implements OnInit {
 
   onPress(swara: string) {
     const index = this.vargitSwaras.indexOf(swara);
+    if (!this.platform.is("ios")) {
+      window.navigator.vibrate(50);
+    }
     if (index === -1) {
       this.vargitSwaras.push(swara);
       this.result = this.result.filter(v => v != swara);
@@ -129,13 +134,25 @@ export class HomePage implements OnInit {
   }
 
   textChange(event) {
+    if (event.detail.inputType === 'insertLineBreak') {
+      // Hide Keyboard
+      (document.activeElement as any).blur();
+    }
+
     const key = event.detail.data;
     let val: string = event.srcElement?.value;
-    val = val?.replace(/\d+/, '');
+    val = val?.replace(/(\d+|\n)/, '');
     val = val.replace(key, '');
     this.result = val?.split(', ').filter(v => v);
     this.resultPhrase = this.result.join(', ');
     this.phrase.value = this.resultPhrase;
+  }
+
+  onKeyboardOpen() {
+    setTimeout(() => {
+      window.scrollTo({ top: 128 });
+      this.content.scrollToBottom();
+    }, 300);
   }
 
 }

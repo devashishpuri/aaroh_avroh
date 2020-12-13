@@ -14,7 +14,7 @@
 
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" #content>
   <ion-list>
     <!-- <ion-list-header>
       <ion-label>
@@ -84,7 +84,7 @@
       <span>(Long press to make swara a vargit swara)</span>
       <div class="ion-padding-vertical">
         <ion-chip *ngFor='let swara of fluteSwaras;' (press)='onPress(swara)' (click)='addSwara(swara)'
-          [outline]='isVargit(swara)'>
+          [outline]='isVargit(swara)' [color]='isVargit(swara) ? "danger" : ""'>
           <ion-label>{{ swara }}</ion-label>
         </ion-chip>
       </div>
@@ -93,7 +93,7 @@
 
     <ion-item>
       <ion-textarea #phrase enterkeyhint="done" inputmode="numeric" [color]='highlightTextArea ? "primary" : "" '
-        placeholder="Result..." (ionInput)='textChange($event)' [value]='resultPhrase'>
+        placeholder="Result..." (ionFocus)='onKeyboardOpen()' (ionInput)='textChange($event)' [value]='resultPhrase'>
       </ion-textarea>
     </ion-item>
 
