@@ -72,6 +72,20 @@ export const THAAT_SWARAS: ThaatSwara[] = [
 
 export const SWARAS = THAAT_SWARAS[Thaat.Bilaval].swaras;
 
+export const RELATED_SWARAS = [
+    ['P̣', 'P', 'Ṗ'],
+    ['Ḍ', 'D', 'Ḋ'],
+    ['ḍ', 'd', 'ḋ'],
+    ['Ṇ', 'N', 'Ṅ'],
+    ['ṇ', 'n', 'ṅ'],
+    ['Ṣ', 'S', 'Ṡ'],
+    ['Ṛ', 'R', 'Ṙ'],
+    ['ṛ', 'r', 'ṙ'],
+    ['G̣', 'G', 'Ġ'],
+    ['g̣', 'g', 'ġ'],
+    ['Ṃ', 'M', 'Ṁ'],
+];
+
 export function getThaatObj(): { [key: string]: Thaat } {
     const keys = Object.keys(Thaat).filter(e => !isFinite(+e));
     const thaatObj = {};

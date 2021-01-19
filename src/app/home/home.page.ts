@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { StorageService, StoragePreference } from '../_shared';
 import { NavigationExtras, Router } from '@angular/router';
 import { AlankarPhrase, DefaultConfig } from '../app.interfaces';
-import { THAAT_SWARAS, Thaat, ROOT_SWARAS, LAST_SWARAS, THAATS } from '../app.structs';
+import { THAAT_SWARAS, Thaat, ROOT_SWARAS, LAST_SWARAS, THAATS, RELATED_SWARAS } from '../app.structs';
 import { KeyValue } from '@angular/common';
 import { IonContent, IonTextarea, Platform } from '@ionic/angular';
 
@@ -83,17 +83,42 @@ export class HomePage implements OnInit {
     }, 300);
   }
 
+  // onPress(swara: string) {
+  //   const index = this.vargitSwaras.indexOf(swara);
+  //   if (!this.platform.is("ios")) {
+  //     window.navigator.vibrate(50);
+  //   }
+  //   if (index === -1) {
+  //     this.vargitSwaras.push(swara);
+  //     this.result = this.result.filter(v => v != swara);
+  //   } else {
+  //     this.vargitSwaras.splice(index, 1);
+  //   }
+  // }
+
   onPress(swara: string) {
-    const index = this.vargitSwaras.indexOf(swara);
-    if (!this.platform.is("ios")) {
+
+    // Vargit Related Swaras
+    const relatedSwaras = RELATED_SWARAS.find(arr => arr.includes(swara));
+    const indexes = [];
+
+    this.vargitSwaras.forEach((swara, index) => {
+      if (relatedSwaras.includes(swara)) {
+        indexes.push(index);
+      }
+    });
+    if (!this.platform.is('ios')) {
       window.navigator.vibrate(50);
     }
-    if (index === -1) {
-      this.vargitSwaras.push(swara);
-      this.result = this.result.filter(v => v != swara);
+    if (indexes.length) {
+      indexes.reverse().forEach(index => {
+        this.vargitSwaras.splice(index, 1);
+      });
     } else {
-      this.vargitSwaras.splice(index, 1);
+      this.vargitSwaras = this.vargitSwaras.concat(relatedSwaras);
+      this.result = this.result.filter(v => !relatedSwaras.includes(v));
     }
+
   }
 
   isVargit(swara: string) {

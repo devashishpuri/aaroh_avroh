@@ -168,10 +168,14 @@ export class AppComponent implements OnInit {
       try {
         if (isDarkTheme) {
           await StatusBar.setStyle({ style: StatusBarStyle.Dark });
-          await StatusBar.setBackgroundColor({ color: '#202020' });
+          if (!this.platform.is('ios')) {
+            await StatusBar.setBackgroundColor({ color: '#202020' });
+          }
         } else {
           await StatusBar.setStyle({ style: StatusBarStyle.Light });
-          await StatusBar.setBackgroundColor({ color: '#ffffff' });
+          if (!this.platform.is('ios')) {
+            await StatusBar.setBackgroundColor({ color: '#ffffff' });
+          }
         }
       } catch (_) {
         console.warn(_);
