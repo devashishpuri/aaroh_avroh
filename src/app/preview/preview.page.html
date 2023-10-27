@@ -1,0 +1,98 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ title || 'Alankar Preview' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="preview-page" [fullscreen]="true" [scrollX]="true">
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        <span class="phrase-title">Aaroh</span>
+      </ion-label>
+    </ion-list-header>
+
+    <ion-item *ngFor="let phrase  of aaroh;">
+      <ion-label class="ion-text-wrap">
+        <span class="phrase-swara" *ngFor="let swara of phrase; let i = index;">
+          {{ swara + (i != phrase.length - 1 ? '    ' : '') }}
+        </span>
+        <strong class="phrase-delimeter">,</strong>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        <span class="phrase-title">Avroh</span>
+      </ion-label>
+    </ion-list-header>
+
+    <ion-item *ngFor="let phrase  of avroh;">
+      <ion-label class="ion-text-wrap">
+        <span class="phrase-swara" *ngFor="let swara of phrase; let i = index;">
+          {{ swara + (i != phrase.length - 1 ? '    ' : '') }}
+        </span>
+        <strong class="phrase-delimeter">,</strong>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Aaroh -->
+  <!-- <div class="ion-padding-horizontal" *ngIf='aaroh'>
+    <h6 class="phrase-title">Aaroh</h6>
+    <div class="phrase-body ion-padding-vertical">
+      <div class="phrase-line" *ngFor="let phrase  of aaroh;">
+        <span class="phrase-swara" *ngFor="let swara of phrase;">
+          {{ swara }}
+        </span>,
+      </div>
+    </div>
+  </div> -->
+
+  <!-- Avroh -->
+  <!-- <div class="ion-padding-horizontal" *ngIf='avroh'>
+    <h6 class="phrase-title">Avroh</h6>
+    <div class="phrase-body ion-padding-vertical">
+      <div class="phrase-line" *ngFor="let phrase  of avroh;">
+        <span class="phrase-swara" *ngFor="let swara of phrase;">
+          {{ swara }}
+        </span>,
+      </div>
+    </div>
+  </div> -->
+
+  <ion-fab vertical="bottom" horizontal="end" edge slot="fixed" *ngIf='!alreadySaved'>
+    <!-- <ion-fab-button class="preview-fab">
+      <ion-icon name="checkmark"></ion-icon>
+      Preview
+    </ion-fab-button> -->
+    <ion-button class="fab-button" (click)='save()'>
+      <ion-icon slot="start" name="checkmark"></ion-icon>
+      Save
+    </ion-button>
+  </ion-fab>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot='start'>
+      <ion-button (click)="share()">
+        <ion-icon slot="start" name="share-social"></ion-icon>
+        Share
+      </ion-button>
+    </ion-buttons>
+
+    <!-- <ion-buttons slot='end'>
+      <ion-button color="primary" (click)='preview()'>
+        Preview
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-footer>

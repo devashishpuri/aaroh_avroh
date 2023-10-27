@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+
+    <!-- Swara Selection -->
+    <!-- <ion-radio-group>
+      <ion-list-header>
+        <ion-label>Choose Swara Selection</ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>Partial Madra Saptak, Madhya Saptak</ion-label>
+        <ion-radio slot="start" value="partial"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Full Madra Saptak, Madhya Saptak</ion-label>
+        <ion-radio slot="start" value="full"></ion-radio>
+      </ion-item>
+    </ion-radio-group> -->
+
+    <!-- Default configuration -->
+    <ion-list-header>
+      <ion-label>Choose Default Configuration</ion-label>
+    </ion-list-header>
+
+    <!-- Root Swara -->
+    <ion-item>
+      <ion-select interface="popover" placeholder="Root Swara" (ionChange)='onConfChange()'
+        [(ngModel)]='defaultConf.rootSwara' label="Choose Root Swara">
+        <ion-select-option *ngFor='let swara of rootSwaras' [value]='swara'>
+          {{ swara }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Last Swara -->
+    <ion-item>
+      <ion-select interface="popover" placeholder="Last Swara" (ionChange)='onConfChange()'
+        [(ngModel)]='defaultConf.lastSwara' label="Choose Last Swara">
+        <ion-select-option *ngFor='let swara of lastSwaras' [value]='swara'>
+          {{ swara }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Thaat -->
+    <ion-item>
+      <ion-select interface="popover" placeholder="Thaat" (ionChange)='onConfChange()' [(ngModel)]='defaultConf.thaat' label="Choose Thaat">
+        <ion-select-option *ngFor='let thaat of thaats | keyvalue: originalOrder' [value]='thaat.value'>
+          {{ thaat.key }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Dark theme  -->
+    <ion-item lines="full">
+      <ion-icon slot="start" name="moon"></ion-icon>
+      <ion-label>
+        Toggle Dark Theme
+      </ion-label>
+      <ion-toggle [(ngModel)]="isDarkMode" slot="end" (ionChange)="toggle($event)"></ion-toggle>
+    </ion-item>
+  </ion-list>
+</ion-content>

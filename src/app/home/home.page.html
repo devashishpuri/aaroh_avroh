@@ -1,20 +1,121 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button routerLink='/settings' routerDirection="forward">
+        <ion-icon slot="icon-only" name="settings-sharp" routerLink='/settings'></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
+
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" #content>
+  <ion-list>
+    <!-- <ion-list-header>
+      <ion-label>
+        Settings
+      </ion-label>
+    </ion-list-header> -->
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+    <!-- Root Swara -->
+    <ion-item>
+      <ion-select interface="popover" placeholder="Root Swara" [(ngModel)]='selectedRootSwara' label="Choose Root Swara">
+        <ion-select-option *ngFor='let swara of rootSwaras' [value]='swara'>
+          {{ swara }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Last Swara -->
+    <ion-item>
+      <ion-select interface="popover" placeholder="Root Swara" [(ngModel)]='selectedLastSwara' label="Choose Last Swara">
+        <ion-select-option *ngFor='let swara of lastSwaras' [value]='swara'>
+          {{ swara }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Thaat -->
+    <ion-item>
+      <ion-select interface="popover" placeholder="Root Swara" (ionChange)='onThaatChange($event)'
+        [(ngModel)]='selectedThaat' label="Choose Thaat">
+        <ion-select-option *ngFor='let thaat of thaats | keyvalue: originalOrder' [value]='thaat.value'>
+          {{ thaat.key }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- <div *ngIf="showAllSwaras; then allSwaras else selectiveSwaras"></div> -->
+
+    <!-- <ng-template #allSwaras>
+      <!-/- Mandra Saptak -/->
+      <div class="ion-padding-horizontal">
+        <h6>Choose Swaras from Mandra Saptak</h6>
+        <div class="ion-padding-vertical">
+          <ion-chip *ngFor='let swara of mandraSaptak;' (click)='addSwara(swara)'>
+            <ion-label>{{ swara }}</ion-label>
+          </ion-chip>
+        </div>
+      </div>
+
+      <!-/- Mandra Saptak -/->
+      <div class="ion-padding-horizontal">
+        <h6>Choose Swaras from Madhya Saptak</h6>
+        <div class="ion-padding-vertical">
+          <ion-chip *ngFor='let swara of madhaSaptak;' (click)='addSwara(swara)'>
+            <ion-label>{{ swara }}</ion-label>
+          </ion-chip>
+        </div>
+      </div>
+    </ng-template> -->
+
+    <!-- <ng-template #selectiveSwaras> -->
+    <!-- Flute Swaras -->
+    <div class="ion-padding-horizontal">
+      <h6>Choose swaras to build first phrase</h6>
+      <span>(Long press to make swara a vargit swara)</span>
+      <div class="ion-padding-vertical">
+        <ion-chip *ngFor='let swara of fluteSwaras;' (press)='onPress(swara)' (click)='addSwara(swara)'
+          [outline]='isVargit(swara)' [color]='isVargit(swara) ? "danger" : ""'>
+          <ion-label>{{ swara }}</ion-label>
+        </ion-chip>
+      </div>
+    </div>
+    <!-- </ng-template> -->
+
+    <ion-item>
+      <ion-textarea #phrase enterkeyhint="done" inputmode="numeric" [color]='highlightTextArea ? "primary" : "" '
+        placeholder="Result..." (ionFocus)='onKeyboardOpen()' (ionInput)='textChange($event)' [value]='resultPhrase'>
+      </ion-textarea>
+    </ion-item>
+
+
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" edge slot="fixed">
+    <!-- <ion-fab-button class="preview-fab">
+      <ion-icon name="checkmark"></ion-icon>
+      Preview
+    </ion-fab-button> -->
+    <ion-button class="fab-button" (click)='preview()'>
+      <ion-icon slot="start" name="checkmark"></ion-icon>
+      Preview
+    </ion-button>
+  </ion-fab>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot='start'>
+      <ion-button (click)='clearResult()'>
+        Clear
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,51 @@
+.phrase-title {
+    color: var(--ion-color-primary);
+    font-size: large;
+    font-weight: bold;
+}
+
+// .phrase-body {
+//     white-space: pre-line;
+//     line-height: 1.6;
+
+//     .phrase-line {
+//         margin: 8px 0;
+//     }
+// }
+
+.ion-text-wrap {
+    white-space: pre-wrap;
+}
+
+.phrase-swara {
+    // &:not(:first-child) {
+    //     margin-left: 16px;
+    // }
+    // &:not(:last-of-type) {
+    //     margin-right: 16px;
+    // }
+    white-space: pre-wrap;
+
+    &:first-of-type {
+        margin-left: -3px;
+    }
+}
+
+ion-item:last-child .phrase-delimeter {
+    display: none;
+}
+
+ion-content::part(scroll) {
+    margin-bottom: 32px;
+}
+
+ion-fab {
+    width: 120px;
+    right: 8px;
+    bottom: -24px;
+
+    ion-button::part(native) {
+        border-radius: 32px;
+        padding: 16px 24px;
+    }
+}

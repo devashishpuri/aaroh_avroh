@@ -1,27 +1,20 @@
-#container {
-  text-align: center;
+ion-fab {
+    width: 120px;
+    right: 32px;
+    bottom: -24px;
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+    ion-button::part(native) {
+        border-radius: 32px;
+        padding: 16px 24px;
+    }
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+ion-textarea {
+    font-size: large;
+    margin-bottom: 32px;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+ion-chip {
+    font-size: medium;
+    // padding: 18px 14px 18px;
 }
