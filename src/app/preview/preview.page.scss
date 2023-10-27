@@ -42,10 +42,10 @@ ion-content::part(scroll) {
 ion-fab {
     width: 120px;
     right: 8px;
-    bottom: -16px;
+    bottom: -24px;
 
     ion-button::part(native) {
         border-radius: 32px;
-        padding: 24px;
+        padding: 16px 24px;
     }
 }

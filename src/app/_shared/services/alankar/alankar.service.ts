@@ -35,7 +35,7 @@ export class AlankarService {
   getAaroh(basePhrase: string[], root: string, range: string, customSwaras?: string[]) {
     const swaras = customSwaras || SWARAS;
     let phrases: Array<Array<string>> = [];
-    let lastSwara: string;
+    let lastSwara: string | null = null;
     for (let i = 0; lastSwara != range; i++) {
       const phrase: string[] = [];
       // Assumption: Should start with Sa
@@ -73,7 +73,7 @@ export class AlankarService {
     });
 
     let phrases: Array<Array<string>> = [];
-    let lastSwara: string;
+    let lastSwara: string | null = null;
     for (let i = 0; lastSwara != root; i++) {
       const phrase: string[] = [];
 
@@ -93,7 +93,7 @@ export class AlankarService {
   }
 
   private vargayiSwaras(swaras: string[], vargitSwaras: string[]) {
-    const swarasSet = [];
+    const swarasSet = [] as string[];
     swaras.forEach(swara => {
       if (!vargitSwaras.includes(swara)) {
         swarasSet.push(swara);

@@ -24,8 +24,7 @@
 
     <!-- Root Swara -->
     <ion-item>
-      <ion-label>Choose Root Swara</ion-label>
-      <ion-select interface="popover" placeholder="Root Swara" [(ngModel)]='selectedRootSwara'>
+      <ion-select interface="popover" placeholder="Root Swara" [(ngModel)]='selectedRootSwara' label="Choose Root Swara">
         <ion-select-option *ngFor='let swara of rootSwaras' [value]='swara'>
           {{ swara }}
         </ion-select-option>
@@ -34,8 +33,7 @@
 
     <!-- Last Swara -->
     <ion-item>
-      <ion-label>Choose Last Swara</ion-label>
-      <ion-select interface="popover" placeholder="Root Swara" [(ngModel)]='selectedLastSwara'>
+      <ion-select interface="popover" placeholder="Root Swara" [(ngModel)]='selectedLastSwara' label="Choose Last Swara">
         <ion-select-option *ngFor='let swara of lastSwaras' [value]='swara'>
           {{ swara }}
         </ion-select-option>
@@ -44,9 +42,8 @@
 
     <!-- Thaat -->
     <ion-item>
-      <ion-label>Choose Thaat</ion-label>
       <ion-select interface="popover" placeholder="Root Swara" (ionChange)='onThaatChange($event)'
-        [(ngModel)]='selectedThaat'>
+        [(ngModel)]='selectedThaat' label="Choose Thaat">
         <ion-select-option *ngFor='let thaat of thaats | keyvalue: originalOrder' [value]='thaat.value'>
           {{ thaat.key }}
         </ion-select-option>
@@ -56,7 +53,7 @@
     <!-- <div *ngIf="showAllSwaras; then allSwaras else selectiveSwaras"></div> -->
 
     <!-- <ng-template #allSwaras>
-      <!-- Mandra Saptak -/->
+      <!-/- Mandra Saptak -/->
       <div class="ion-padding-horizontal">
         <h6>Choose Swaras from Mandra Saptak</h6>
         <div class="ion-padding-vertical">
@@ -66,7 +63,7 @@
         </div>
       </div>
 
-      <!-- Mandra Saptak -/->
+      <!-/- Mandra Saptak -/->
       <div class="ion-padding-horizontal">
         <h6>Choose Swaras from Madhya Saptak</h6>
         <div class="ion-padding-vertical">

@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { StorageService, StoragePreference } from '../_shared';
 import { NavigationExtras, Router } from '@angular/router';
 import { AlankarPhrase, DefaultConfig } from '../app.interfaces';
-import { THAAT_SWARAS, Thaat, ROOT_SWARAS, LAST_SWARAS, THAATS, RELATED_SWARAS } from '../app.structs';
+import { THAAT_SWARAS, Thaat, ROOT_SWARAS, LAST_SWARAS, THAATS } from '../app.structs';
 import { KeyValue } from '@angular/common';
-import { IonContent, IonTextarea, Platform } from '@ionic/angular';
+import { IonContent, IonTextarea, Platform, SelectChangeEventDetail } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -13,8 +13,8 @@ import { IonContent, IonTextarea, Platform } from '@ionic/angular';
 })
 export class HomePage implements OnInit {
 
-  @ViewChild('phrase', { static: false }) phrase: IonTextarea;
-  @ViewChild('content') content: IonContent;
+  @ViewChild('phrase', { static: false }) phrase?: IonTextarea;
+  @ViewChild('content') content?: IonContent;
 
   rootSwaras = ROOT_SWARAS;
   lastSwaras = LAST_SWARAS;
@@ -28,18 +28,18 @@ export class HomePage implements OnInit {
   highlightTextArea = false;
 
   // Swaras for Selection
-  mandraSaptak: string[];
-  madhaSaptak: string[];
+  mandraSaptak?: string[];
+  madhaSaptak?: string[];
   fluteSwaras: string[];
   showAllSwaras = false;
 
   // Varjit Swara
-  vargitSwaras = [];
+  vargitSwaras: string[] = [];
 
   // Result
   private result: string[] = [];
 
-  resultPhrase: string;
+  resultPhrase?: string | null;
 
   constructor(
     private router: Router,
@@ -66,7 +66,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  onThaatChange(event) {
+  onThaatChange(event: any) {
     this.fluteSwaras = THAAT_SWARAS[event.target.value].swaraSelection;
   }
 
@@ -83,42 +83,17 @@ export class HomePage implements OnInit {
     }, 300);
   }
 
-  // onPress(swara: string) {
-  //   const index = this.vargitSwaras.indexOf(swara);
-  //   if (!this.platform.is("ios")) {
-  //     window.navigator.vibrate(50);
-  //   }
-  //   if (index === -1) {
-  //     this.vargitSwaras.push(swara);
-  //     this.result = this.result.filter(v => v != swara);
-  //   } else {
-  //     this.vargitSwaras.splice(index, 1);
-  //   }
-  // }
-
   onPress(swara: string) {
-
-    // Vargit Related Swaras
-    const relatedSwaras = RELATED_SWARAS.find(arr => arr.includes(swara));
-    const indexes = [];
-
-    this.vargitSwaras.forEach((swara, index) => {
-      if (relatedSwaras.includes(swara)) {
-        indexes.push(index);
-      }
-    });
-    if (!this.platform.is('ios')) {
+    const index = this.vargitSwaras.indexOf(swara);
+    if (!this.platform.is("ios")) {
       window.navigator.vibrate(50);
     }
-    if (indexes.length) {
-      indexes.reverse().forEach(index => {
-        this.vargitSwaras.splice(index, 1);
-      });
+    if (index === -1) {
+      this.vargitSwaras.push(swara);
+      this.result = this.result.filter(v => v != swara);
     } else {
-      this.vargitSwaras = this.vargitSwaras.concat(relatedSwaras);
-      this.result = this.result.filter(v => !relatedSwaras.includes(v));
+      this.vargitSwaras.splice(index, 1);
     }
-
   }
 
   isVargit(swara: string) {
@@ -158,7 +133,7 @@ export class HomePage implements OnInit {
     return 0;
   }
 
-  textChange(event) {
+  textChange(event: any) {
     if (event.detail.inputType === 'insertLineBreak') {
       // Hide Keyboard
       (document.activeElement as any).blur();
@@ -170,13 +145,13 @@ export class HomePage implements OnInit {
     val = val.replace(key, '');
     this.result = val?.split(', ').filter(v => v);
     this.resultPhrase = this.result.join(', ');
-    this.phrase.value = this.resultPhrase;
+    this.phrase!.value = this.resultPhrase;
   }
 
   onKeyboardOpen() {
     setTimeout(() => {
       window.scrollTo({ top: 128 });
-      this.content.scrollToBottom();
+      this.content?.scrollToBottom();
     }, 300);
   }
 

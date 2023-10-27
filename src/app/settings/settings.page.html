@@ -35,9 +35,8 @@
 
     <!-- Root Swara -->
     <ion-item>
-      <ion-label>Choose Root Swara</ion-label>
       <ion-select interface="popover" placeholder="Root Swara" (ionChange)='onConfChange()'
-        [(ngModel)]='defaultConf.rootSwara'>
+        [(ngModel)]='defaultConf.rootSwara' label="Choose Root Swara">
         <ion-select-option *ngFor='let swara of rootSwaras' [value]='swara'>
           {{ swara }}
         </ion-select-option>
@@ -46,9 +45,8 @@
 
     <!-- Last Swara -->
     <ion-item>
-      <ion-label>Choose Last Swara</ion-label>
       <ion-select interface="popover" placeholder="Last Swara" (ionChange)='onConfChange()'
-        [(ngModel)]='defaultConf.lastSwara'>
+        [(ngModel)]='defaultConf.lastSwara' label="Choose Last Swara">
         <ion-select-option *ngFor='let swara of lastSwaras' [value]='swara'>
           {{ swara }}
         </ion-select-option>
@@ -57,8 +55,7 @@
 
     <!-- Thaat -->
     <ion-item>
-      <ion-label>Choose Thaat</ion-label>
-      <ion-select interface="popover" placeholder="Thaat" (ionChange)='onConfChange()' [(ngModel)]='defaultConf.thaat'>
+      <ion-select interface="popover" placeholder="Thaat" (ionChange)='onConfChange()' [(ngModel)]='defaultConf.thaat' label="Choose Thaat">
         <ion-select-option *ngFor='let thaat of thaats | keyvalue: originalOrder' [value]='thaat.value'>
           {{ thaat.key }}
         </ion-select-option>

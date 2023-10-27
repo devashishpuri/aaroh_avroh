@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Plugins } from '@capacitor/core';
 
 import { AlankarPhrase, SavedAlankar } from '../app.interfaces';
 import { AlankarService, StorageService } from '../_shared';
 import { AlertController, NavController } from '@ionic/angular';
 import { ROOT_SWARAS, LAST_SWARAS, Thaat } from '../app.structs';
-
-const { Share } = Plugins;
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-preview',
@@ -16,8 +14,8 @@ const { Share } = Plugins;
 })
 export class PreviewPage implements OnInit {
 
-  title: string;
-  alankar: SavedAlankar & AlankarPhrase;
+  title?: string;
+  alankar: SavedAlankar & AlankarPhrase = {} as any;
   avroh: Array<Array<string>> = [];
   aaroh: Array<Array<string>> = [];
 
@@ -32,18 +30,18 @@ export class PreviewPage implements OnInit {
     private alertController: AlertController
   ) {
     this.route.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        const alreadySaved = this.router.getCurrentNavigation().extras.state.saved;
+      if (this.router.getCurrentNavigation()?.extras.state) {
+        const alreadySaved = this.router.getCurrentNavigation()?.extras?.state?.['saved'] ?? false;
         this.alreadySaved = alreadySaved || false;
-        this.alankar = this.router.getCurrentNavigation().extras.state.alankarPhrase;
-      } else if (params.phrase) {
+        this.alankar = this.router.getCurrentNavigation()?.extras?.state?.['alankarPhrase'];
+      } else if (params['phrase']) {
         this.alankar = {
-          phrase: (params.phrase as string).split(','),
-          rootSwara: params.rootSwara || ROOT_SWARAS[0],
-          lastSwara: params.lastSwara || LAST_SWARAS[0],
-          thaat: +(params.thaat || Thaat.Bilaval),
-          title: params.title,
-          vargitSwaras: (params.vargitSwaras as string || "").split(',')
+          phrase: (params['phrase'] as string).split(','),
+          rootSwara: params['rootSwara'] || ROOT_SWARAS[0],
+          lastSwara: params['lastSwara'] || LAST_SWARAS[0],
+          thaat: +(params['thaat'] || Thaat.Bilaval),
+          title: params['title'],
+          vargitSwaras: (params['vargitSwaras'] as string || "").split(',')
         } as SavedAlankar;
       } else {
         this.router.navigate(['/home']);
@@ -60,8 +58,8 @@ export class PreviewPage implements OnInit {
     const alankar = this.alankarService.getAlankar(this.alankar.phrase,
       this.alankar.rootSwara,
       this.alankar.lastSwara,
-      this.alankar.thaat,
-      this.alankar.vargitSwaras);
+      this.alankar.thaat!,
+      this.alankar.vargitSwaras!);
     this.aaroh = alankar.aaroh;
     this.avroh = alankar.avroh;
   }
@@ -94,7 +92,7 @@ export class PreviewPage implements OnInit {
   }
 
   private async getTitle(defaultVal?: string) {
-    return new Promise<string>(async (resolve, reject) => {
+    return new Promise<string | null>(async (resolve, reject) => {
       const alert = await this.alertController.create({
         cssClass: 'alankar-title',
         header: 'Alankar Name',

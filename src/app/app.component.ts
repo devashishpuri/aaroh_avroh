@@ -1,16 +1,13 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 
 import { Platform, ToastController } from '@ionic/angular';
-// import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-// import { StatusBar } from '@ionic-native/status-bar/ngx';
-import {
-  Plugins,
-  StatusBarStyle,
-} from '@capacitor/core';
+
 import { Router, NavigationEnd, NavigationCancel, ActivatedRoute } from '@angular/router';
 import { StorageService, StoragePreference } from './_shared';
-
-const { StatusBar, SplashScreen, App } = Plugins;
+import { SplashScreen } from '@capacitor/splash-screen';
+import { App } from '@capacitor/app';
+import { StatusBar, StatusBarStyle, Style } from '@capacitor/status-bar';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-root',
@@ -50,6 +47,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private storage: StorageService,
+    private localStorage: Storage,
     public toastController: ToastController,
     private zone: NgZone
   ) {
@@ -59,7 +57,6 @@ export class AppComponent implements OnInit {
       this.openPreviewIfParams();
     }
     this.initializeApp();
-    this.getDeviceDarkMode();
     this.prefersDark.addEventListener('change', this.getDeviceDarkMode.bind(this));
 
     this.router.events
@@ -87,7 +84,7 @@ export class AppComponent implements OnInit {
 
   private openPreviewIfParams() {
     this.route.queryParams.subscribe(params => {
-      if (params.phrase) {
+      if (params['phrase']) {
         const slug = window.location.href.split("home").pop();
         if (slug && slug.indexOf('phrase') !== -1) {
           this.router.navigateByUrl(`/preview${slug}`);
@@ -161,21 +158,20 @@ export class AppComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  async ngOnInit() {
+    await this.localStorage.create();
+    this.getDeviceDarkMode();
+  }
 
   private setStatusBarTheme(isDarkTheme = false) {
     this.platform.ready().then(async () => {
       try {
         if (isDarkTheme) {
-          await StatusBar.setStyle({ style: StatusBarStyle.Dark });
-          if (!this.platform.is('ios')) {
-            await StatusBar.setBackgroundColor({ color: '#202020' });
-          }
+          await StatusBar.setStyle({ style: Style.Dark });
+          await StatusBar.setBackgroundColor({ color: '#202020' });
         } else {
-          await StatusBar.setStyle({ style: StatusBarStyle.Light });
-          if (!this.platform.is('ios')) {
-            await StatusBar.setBackgroundColor({ color: '#ffffff' });
-          }
+          await StatusBar.setStyle({ style: Style.Light });
+          await StatusBar.setBackgroundColor({ color: '#ffffff' });
         }
       } catch (_) {
         console.warn(_);

@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { SavedAlankar } from '../app.interfaces';
 import { StorageService } from '../_shared';
-import { Plugins } from '@capacitor/core';
-
-const { Share } = Plugins;
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-saved',
@@ -37,7 +35,7 @@ export class SavedPage implements OnInit {
 
   async remove(event: Event, alankar: SavedAlankar) {
     event.stopPropagation();
-    await this.storage.deleteAlankar(alankar.id);
+    await this.storage.deleteAlankar(alankar.id!);
     const index = this.alankars.indexOf(alankar);
     this.alankars.splice(index, 1);
   }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -11,12 +11,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
-import { IonicStorageModule } from '@ionic/storage';
+import { Drivers } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage-angular';
 import { IonicGestureConfig } from './_helpers/hammer.conf';
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot({scrollAssist: true}),
@@ -24,7 +24,13 @@ import { IonicGestureConfig } from './_helpers/hammer.conf';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     IonicStorageModule.forRoot({
       name: '_alankars',
-      driverOrder: ['sqlite', 'indexeddb', 'websql'],
+      driverOrder: [ Drivers.SecureStorage, Drivers.IndexedDB, Drivers.LocalStorage],
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
     })
   ],
   providers: [

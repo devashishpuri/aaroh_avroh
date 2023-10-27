@@ -29,11 +29,11 @@ export class StorageService {
 
   saveAlankar(alankar: SavedAlankar): Promise<any> {
     alankar.id = uuid.v4();
-    return this.storage.set(alankar.id, JSON.stringify(alankar));
+    return this.storage.set(alankar.id!, JSON.stringify(alankar));
   }
 
   async getSavedAlankars(): Promise<SavedAlankar[]> {
-    const savedAlankars = [];
+    const savedAlankars = [] as SavedAlankar[];
     const prefrences = Object.values(StoragePreference);
     await this.storage.forEach((alankar, key) => {
       if (!prefrences.includes(key as StoragePreference)) {

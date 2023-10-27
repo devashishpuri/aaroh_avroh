@@ -4,11 +4,8 @@ import { Thaat, ROOT_SWARAS, LAST_SWARAS, THAATS } from '../app.structs';
 import { KeyValue } from '@angular/common';
 import { DefaultConfig } from '../app.interfaces';
 
-import {
-  Plugins,
-  StatusBarStyle,
-} from '@capacitor/core';
-const { StatusBar } = Plugins;
+import { ToggleCustomEvent } from '@ionic/angular';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 @Component({
   selector: 'app-settings',
@@ -30,7 +27,7 @@ export class SettingsPage implements OnInit {
   }
 
   // Dark Mode Settings
-  isDarkMode;
+  isDarkMode?: boolean;
 
   prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -58,7 +55,7 @@ export class SettingsPage implements OnInit {
     }
   }
 
-  toggle(event) {
+  toggle(event: ToggleCustomEvent) {
     // document.body.classList.toggle('dark', event.checked);
     if (event.detail.checked) {
       document.body.classList.add('dark');
@@ -74,10 +71,10 @@ export class SettingsPage implements OnInit {
   private async setStatusBarTheme(isDarkTheme = false) {
     try {
       if (isDarkTheme) {
-        await StatusBar.setStyle({ style: StatusBarStyle.Dark });
+        await StatusBar.setStyle({ style: Style.Dark });
         await StatusBar.setBackgroundColor({ color: '#202020' });
       } else {
-        await StatusBar.setStyle({ style: StatusBarStyle.Light });
+        await StatusBar.setStyle({ style: Style.Light });
         await StatusBar.setBackgroundColor({ color: '#ffffff' });
       }
     } catch (_) {
