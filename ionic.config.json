@@ -1,0 +1,7 @@
+{
+  "name": "Alankar/Palta Maker",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
