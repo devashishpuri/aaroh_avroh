@@ -14,6 +14,7 @@ import { environment } from '../environments/environment';
 import { Drivers } from '@ionic/storage';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { IonicGestureConfig } from './_helpers/hammer.conf';
+import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +25,7 @@ import { IonicGestureConfig } from './_helpers/hammer.conf';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     IonicStorageModule.forRoot({
       name: '_alankars',
-      driverOrder: [ Drivers.SecureStorage, Drivers.IndexedDB, Drivers.LocalStorage],
+      driverOrder: [ CordovaSQLiteDriver._driver, Drivers.IndexedDB, Drivers.LocalStorage],
     }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),

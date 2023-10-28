@@ -1,13 +1,13 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-
 import { Platform, ToastController } from '@ionic/angular';
-
 import { Router, NavigationEnd, NavigationCancel, ActivatedRoute } from '@angular/router';
 import { StorageService, StoragePreference } from './_shared';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { App } from '@capacitor/app';
-import { StatusBar, StatusBarStyle, Style } from '@capacitor/status-bar';
+import { StatusBar, Style } from '@capacitor/status-bar';
 import { Storage } from '@ionic/storage-angular';
+
+import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 
 @Component({
   selector: 'app-root',
@@ -159,6 +159,7 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
+    await this.localStorage.defineDriver(CordovaSQLiteDriver);
     await this.localStorage.create();
     this.getDeviceDarkMode();
   }
